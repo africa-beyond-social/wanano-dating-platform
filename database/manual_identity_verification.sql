@@ -42,3 +42,15 @@ create policy "Members and admins can read verification files" on storage.object
   using(bucket_id='identity-verification' and ((storage.foldername(name))[1]=(select auth.uid())::text or ((select auth.jwt())->'app_metadata'->>'role')='admin'));
 create policy "WANANO admins can delete verification files" on storage.objects for delete to authenticated
   using(bucket_id='identity-verification' and ((select auth.jwt())->'app_metadata'->>'role')='admin');
+
+-- Follow-up hardening applied after initial creation:
+create unique index if not exists identity_verifications_one_pending_per_user_idx
+  on public.identity_verifications(user_id) where status='pending';
+drop policy if exists "WANANO admins can review identity verification" on public.identity_verifications;
+create policy "WANANO admins can review identity verification"
+  on public.identity_verifications for update to authenticated
+  using (((select auth.jwt())->'app_metadata'->>'role')='admin' and status='pending')
+  with check (((select auth.jwt())->'app_metadata'->>'role')='admin'
+    and status in ('approved','rejected')
+    and reviewed_by=(select auth.uid())
+    and reviewed_at is not null);
