@@ -196,7 +196,7 @@ export default function ProfilePhotos({ userId }: { userId: string }) {
         <div>
           <span className="member-step">01B / YOUR PHOTOGRAPHS</span>
           <h2>Put a face to your introduction</h2>
-          <p>Add up to five recent photographs. Your pictures stay private until WANANO moderation is introduced and they are approved.</p>
+          <p>Add up to five recent photographs. Your pictures remain private to your account until a WANANO moderator approves them.</p>
         </div>
         <span className="profile-edit-mark" aria-hidden="true">W</span>
       </div>
@@ -228,7 +228,7 @@ export default function ProfilePhotos({ userId }: { userId: string }) {
               <article className="photo-item" key={photo.id}>
                 <div className="photo-preview">
                   {/* Private signed URL; refreshed whenever the dashboard loads. */}
-                  <img src={photo.signedUrl} alt="Your uploaded profile photograph" />
+                  <img src={photo.signedUrl} alt="Your uploaded profile photograph" loading="lazy" decoding="async" />
                   {photo.is_primary && <span className="photo-primary-tag">Main photo</span>}
                 </div>
                 <div className="photo-item-meta">
