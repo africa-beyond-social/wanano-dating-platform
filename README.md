@@ -36,7 +36,7 @@ npm run dev
 
 ## Security and product principles
 - Adults aged 18+ only; age is checked in the registration UI and database trigger.
-- Profiles use Row Level Security; members can read, insert and update only their own row.
+- Profiles use Row Level Security; members can read only their own profile and update only selected non-sensitive fields. Birth date and consent timestamp cannot be changed through the member API.
 - The database security and performance advisors currently report no lints.
 - Government ID and biometric verification are not collected yet.
 - Do not collect identity documents or verification videos until the provider, consent flow, retention policy and access controls have been implemented and tested.
