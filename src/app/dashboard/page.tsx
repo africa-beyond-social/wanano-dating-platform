@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import DashboardActions from "./actions";
+import ProfileEditor from "./profile-editor";
 import "../auth.css";
 
 export const dynamic = "force-dynamic";
