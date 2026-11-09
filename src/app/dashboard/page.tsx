@@ -29,16 +29,14 @@ export default async function DashboardPage() {
       <p>Your journey starts with a complete profile and verified identity. We will guide you through each step.</p>
     </section>
     <section className="member-grid">
-      <article className="member-card">
-        <span className="member-step">01 / YOUR PROFILE</span>
-        <h2>Build your introduction</h2>
-        <p>Keep your personal details accurate. Profile editing and photographs will be added in the next step.</p>
-        <dl>
-          <div><dt>Email</dt><dd>{user.email}</dd></div>
-          <div><dt>Country</dt><dd>{profile?.country || "Not set"}</dd></div>
-          <div><dt>Relationship goal</dt><dd>{profile?.relationship_goal === "marriage" ? "Marriage" : "Serious relationship"}</dd></div>
-        </dl>
-      </article>
+      <ProfileEditor userId={user.id} profile={{
+        full_name: profile?.full_name || "",
+        gender: profile?.gender || "",
+        country: profile?.country || "",
+        city: profile?.city || null,
+        relationship_goal: profile?.relationship_goal || "serious_relationship",
+        bio: profile?.bio || null
+      }} />
       <article className="member-card">
         <span className="member-step">02 / TRUST & SAFETY</span>
         <h2>Identity verification</h2>
