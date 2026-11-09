@@ -86,7 +86,7 @@ export default function ProfileEditor({ userId, profile }: { userId: string; pro
     }
   }
 
-  return <section className="profile-editor member-card member-card-wide">
+  return <section id="profile" className="profile-editor member-card member-card-wide">
     <div className="profile-editor-heading">
       <div>
         <span className="member-step">01 / YOUR PROFILE</span>
