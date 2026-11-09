@@ -60,12 +60,13 @@ export default function IdentityVerification({ userId, enabled, verification }: 
     {!enabled ? <>
       <p>Manual verification is being prepared. Secure document intake is switched off while WANANO completes its privacy, retention and administrator-access checks. Do not email or message identity documents to anyone claiming to represent WANANO.</p>
       <span className="status-pill">Secure intake not yet open</span>
-    </> : current ? <>
+    </> : current && current.status !== "rejected" ? <>
       <p>Your verification request was submitted on {new Date(current.submitted_at).toLocaleDateString()}.</p>
       <span className="status-pill">{current.status === "pending" ? "Awaiting manual review" : current.status === "approved" ? "Identity approved" : "Further action required"}</span>
       {current.status === "rejected" && current.review_note && <p className="form-alert form-error">{current.review_note}</p>}
       <p className="photo-privacy-note">Your documents are stored privately and are not visible to other members.</p>
     </> : <>
+      {current?.status === "rejected" && <p className="form-alert form-error">Your previous request was not approved. {current.review_note || "You may submit a corrected request."}</p>}
       <p>Submit a government-issued identity document and a recent selfie. An authorized WANANO administrator will review them manually.</p>
       <form className="profile-form" onSubmit={submit}>
         <label>Document type<select value={documentType} onChange={e => setDocumentType(e.target.value as "national_id" | "passport")}><option value="national_id">National identity document</option><option value="passport">Passport</option></select></label>
