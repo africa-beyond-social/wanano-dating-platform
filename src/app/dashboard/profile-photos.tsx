@@ -191,7 +191,7 @@ export default function ProfilePhotos({ userId }: { userId: string }) {
   }
 
   return (
-    <section className="member-card member-card-wide photo-manager">
+    <section id="photos" className="member-card member-card-wide photo-manager">
       <div className="profile-editor-heading">
         <div>
           <span className="member-step">01B / YOUR PHOTOGRAPHS</span>
