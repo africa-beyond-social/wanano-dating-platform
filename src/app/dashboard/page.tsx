@@ -65,7 +65,7 @@ export default async function DashboardPage() {
         <span className="member-private-label"><span /> Private member area</span>
       </div>
       <section className="member-grid">
-        <div id="profile"><ProfileEditor userId={user.id} profile={{
+        <div className="dashboard-grid-span"><ProfileEditor userId={user.id} profile={{
           full_name: profile?.full_name || "",
           gender: profile?.gender || "",
           country: profile?.country || "",
@@ -73,7 +73,7 @@ export default async function DashboardPage() {
           relationship_goal: profile?.relationship_goal || "serious_relationship",
           bio: profile?.bio || null
         }} /></div>
-        <div id="photos"><ProfilePhotos userId={user.id} /></div>
+        <div className="dashboard-grid-span"><ProfilePhotos userId={user.id} /></div>
         <article className="member-card member-status-card" id="trust">
           <span className="member-step">02 / TRUST &amp; SAFETY</span>
           <div className="status-card-icon status-shield" aria-hidden="true">✓</div>
