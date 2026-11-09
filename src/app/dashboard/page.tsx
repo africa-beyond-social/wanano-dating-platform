@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import DashboardActions from "./actions";
 import ProfileEditor from "./profile-editor";
+import ProfilePhotos from "./profile-photos";
 import "../auth.css";
 
 export const dynamic = "force-dynamic";
@@ -37,6 +38,7 @@ export default async function DashboardPage() {
         relationship_goal: profile?.relationship_goal || "serious_relationship",
         bio: profile?.bio || null
       }} />
+      <ProfilePhotos userId={user.id} />
       <article className="member-card">
         <span className="member-step">02 / TRUST & SAFETY</span>
         <h2>Identity verification</h2>
