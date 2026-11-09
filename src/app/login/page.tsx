@@ -1,19 +1,24 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import "../auth.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState(searchParams.get("message") === "confirmation_failed" ? "Your confirmation link could not be completed. Please request a new one or try again." : "");
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("message") === "confirmation_failed") {
+      setMessage("Your confirmation link could not be completed. Please request a new one or try again.");
+    }
+  }, []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
