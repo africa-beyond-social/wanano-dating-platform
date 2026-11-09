@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import DashboardActions from "./actions";
 import ProfileEditor from "./profile-editor";
 import ProfilePhotos from "./profile-photos";
+import IdentityVerification from "./identity-verification";
 import "../auth.css";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +19,9 @@ export default async function DashboardPage() {
     .select("full_name,date_of_birth,gender,country,city,relationship_goal,bio")
     .eq("id", user.id)
     .maybeSingle();
+
+  const { data: verification } = await supabase.from("identity_verifications").select("id,document_type,document_country,status,submitted_at,review_note").eq("user_id", user.id).order("submitted_at", { ascending: false }).limit(1).maybeSingle();
+  const verificationEnabled = process.env.NEXT_PUBLIC_IDENTITY_VERIFICATION_ENABLED === "true";
 
   return <main className="member-shell">
     <header className="member-header">
@@ -39,12 +43,7 @@ export default async function DashboardPage() {
         bio: profile?.bio || null
       }} />
       <ProfilePhotos userId={user.id} />
-      <article className="member-card">
-        <span className="member-step">02 / TRUST & SAFETY</span>
-        <h2>Identity verification</h2>
-        <p>Identity checks are not yet open. We will introduce a secure provider and consent process before collecting any identity documents or videos.</p>
-        <span className="status-pill">Verification setup pending</span>
-      </article>
+      <IdentityVerification userId={user.id} enabled={verificationEnabled} verification={verification} />
       <article className="member-card member-card-wide">
         <span className="member-step">03 / MATCHMAKING</span>
         <h2>Meaningful introductions take preparation</h2>
